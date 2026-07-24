@@ -12,8 +12,8 @@ interface UseCategoryFormProps {
 
 export function useCategoryForm({ initialData, onSubmit }: UseCategoryFormProps) {
   const [formData, setFormData] = useState<CategoryFormData>({
-      name: initialData?.name || "",
-      icon:initialData?.icon || "",
+      name: initialData?.name || ""
+      //icon:initialData?.icon || "",
 
   });
 
@@ -32,9 +32,11 @@ export function useCategoryForm({ initialData, onSubmit }: UseCategoryFormProps)
     const newErrors: Partial<CategoryFormData> = {};
 
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Category Name is required";
-    }
+   if (!formData.name.trim()) {
+    newErrors.name = "Category name is required";
+  } else if (formData.name.trim().length < 2) {
+    newErrors.name = "Category name must be at least 2 characters";
+  }
 
 
     setErrors(newErrors);
@@ -50,12 +52,14 @@ export function useCategoryForm({ initialData, onSubmit }: UseCategoryFormProps)
 
     setIsSubmitting(true);
     try {
-      console.log(formData);
-      await onSubmit(formData);
+      await onSubmit({
+        ...formData,
+        name: formData.name.trim(),
+      });
       // Reset form on success
       setFormData({
         name: "",
-        icon: "",
+     
       });
       setErrors({});
     } catch (error) {
@@ -68,7 +72,7 @@ export function useCategoryForm({ initialData, onSubmit }: UseCategoryFormProps)
   const resetForm = () => {
     setFormData({
       name: initialData?.name || "",
-      icon:initialData?.icon || "",
+      //icon:initialData?.icon || "",
     });
     setErrors({});
   };

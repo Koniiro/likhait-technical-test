@@ -58,53 +58,8 @@ export function CategoryForm({
         required
       />
       
-      <div style={{ position: "relative" }}>
-    <label style={{ display: "block", marginBottom: 8 }}>
-      Category Icon
-    </label>
+      
 
-    <button
-      type="button"
-      onClick={() => setShowPicker(!showPicker)}
-      style={{
-        width: "100%",
-        padding: "5px 12px",
-        border: "1px solid #CCCCCC",
-        borderRadius: 6,
-        background: "#fff",
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        cursor: "pointer",
-      }}
-    >
-      <span style={{ fontSize: 28 }}>
-        {formData.icon || "📁"}
-      </span>
-
-      <span>
-        {formData.icon ? "Change Icon" : "Choose Icon"}
-      </span>
-    </button>
-
-    {showPicker && (
-      <div
-        style={{
-          position: "absolute",
-          top: "100%",
-          marginTop: 8,
-          zIndex: 100,
-        }}
-      >
-        <EmojiPicker
-          onEmojiClick={(emojiData) => {
-            handleChange("icon", emojiData.emoji);
-            setShowPicker(false);
-          }}
-        />
-      </div>
-    )}
-  </div>
 
 
       <div style={buttonGroupStyle}>

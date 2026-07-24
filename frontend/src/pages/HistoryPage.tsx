@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getExpenses, createExpense } from "../services/api";
+import { getExpenses, createExpense, createCategory, fetchCategories } from "../services/api";
 import { CategoryFormData, Expense, ExpenseFormData } from "../types";
 import YearNavigation from "../components/YearNavigation";
 import { MonthNavigation } from "../components/MonthNavigation";
@@ -54,17 +54,20 @@ const HistoryPage: React.FC = () => {
 
   const fetchExpenses = async () => {
     try {
+      console.log("loading")
       setLoading(true);
-      const data = await getExpenses(selectedYear, selectedMonth);
-      setExpenses(data);
-    } catch (error) {
-      console.error("Error fetching expenses:", error);
-    } finally {
-      setLoading(false);
+      //const data = await getExpenses(selectedYear, selectedMonth);
+      //setExpenses(data);
       const sortedExpenses = [...dummyExpenses].sort(
         (a, b) => new Date(b.created_at).getDate() - new Date(a.created_at).getDate()
       );
       setExpenses(sortedExpenses);
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    } finally {
+      console.log("loading")
+      setLoading(false);
+
     }
   };
 
@@ -92,7 +95,7 @@ const HistoryPage: React.FC = () => {
     try {
       await createCategory(data);
       setIsExpenseModalOpen(false);
-      fetchCategory();
+      fetchCategories();
     } catch (error) {
       console.error("Error creating category:", error);
       throw error;

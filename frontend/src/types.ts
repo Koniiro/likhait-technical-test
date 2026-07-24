@@ -21,7 +21,14 @@ export interface ExpenseFormData {
 
 export interface CategoryFormData {
   name:string;
-  icon:string;
+  //icon:string;
+}
+export interface Category {
+  id:number;
+  name:string;
+  //icon:string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface MonthlySummary {
