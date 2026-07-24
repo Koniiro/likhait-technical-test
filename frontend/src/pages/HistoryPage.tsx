@@ -8,7 +8,6 @@ import { CalendarExpenseTable } from "../components/CalendarExpenseTable";
 import { ExpenseForm } from "../components/ExpenseForm";
 import { Modal, Button } from "../vibes";
 import { COLORS } from "../constants/colors";
-import { dummyExpenses } from "../constants/dummyVals";
 import { CategoryForm } from "../components/CategoryForm";
 
 const HistoryPage: React.FC = () => {
@@ -56,12 +55,9 @@ const HistoryPage: React.FC = () => {
     try {
       console.log("loading")
       setLoading(true);
-      //const data = await getExpenses(selectedYear, selectedMonth);
-      //setExpenses(data);
-      const sortedExpenses = [...dummyExpenses].sort(
-        (a, b) => new Date(b.created_at).getDate() - new Date(a.created_at).getDate()
-      );
-      setExpenses(sortedExpenses);
+      const data = await getExpenses(selectedYear, selectedMonth);
+      setExpenses(data)
+
     } catch (error) {
       console.error("Error fetching expenses:", error);
     } finally {

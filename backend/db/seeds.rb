@@ -113,7 +113,7 @@ expense_templates = {
 
 # Start date: January 1, 2024
 # End date: February 18, 2026
-start_date = Date.new(2024, 1, 1)
+start_date = Date.new(2025, 12, 1)
 end_date = Date.new(2026, 2, 18)
 
 expense_count = 0
@@ -145,7 +145,7 @@ while current_date <= end_date
         description: template[:description],
         amount: amount,
         category: category,
-        date: current_date,
+        #date: current_date,
         created_at: current_date,
         updated_at: current_date
       )
