@@ -1,5 +1,5 @@
 /**
- * Custom hook for managing expense form state and validation
+ * Custom hook for managing category form state and validation
  */
 
 import { useState } from "react";
