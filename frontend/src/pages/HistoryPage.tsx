@@ -72,11 +72,7 @@ const HistoryPage: React.FC = () => {
     } finally {
  
       setLoading(false);
-      //Delete when finished
-      const sortedExpenses = [...dummyExpenses].sort(
-        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime() 
-      );
-      setExpenses(sortedExpenses);
+
     }
   };
   const getCategories = async () => {
