@@ -111,8 +111,7 @@ const HistoryPage: React.FC = () => {
     try {
       await createCategory(data);
       setIsExpenseModalOpen(false);
-      const datar = await getCategories();
-      console.log(datar)
+      getCategories();
 
     } catch (error) {
       console.error("Error creating category:", error);
