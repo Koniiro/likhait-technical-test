@@ -8,7 +8,6 @@ import { CalendarExpenseTable } from "../components/CalendarExpenseTable";
 import { ExpenseForm } from "../components/ExpenseForm";
 import { Modal, Button } from "../vibes";
 import { COLORS } from "../constants/colors";
-import { dummyExpenses } from "../constants/dummyVals";
 
 const HistoryPage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -63,11 +62,7 @@ const HistoryPage: React.FC = () => {
     } finally {
  
       setLoading(false);
-      //Delete when finished
-      const sortedExpenses = [...dummyExpenses].sort(
-        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime() 
-      );
-      setExpenses(sortedExpenses);
+
     }
   };
 
