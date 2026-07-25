@@ -110,7 +110,7 @@ const HistoryPage: React.FC = () => {
   const handleAddCategory = async (data: CategoryFormData) => {
     try {
       await createCategory(data);
-      setIsExpenseModalOpen(false);
+      setIsCategoryModalOpen(false);
       getCategories();
 
     } catch (error) {
