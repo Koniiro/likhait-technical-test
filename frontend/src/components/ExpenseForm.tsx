@@ -44,7 +44,7 @@ export function ExpenseForm({
     value: category.name,
     label: category.name,
   }));
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleDateString("en-CA");
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
       <TextField
