@@ -25,7 +25,7 @@ end
 puts "Created #{created_categories.count} categories"
 
 # Generate expenses from January 2024 to February 18, 2026
-puts "Creating expenses from January 2024 to February 18, 2026..."
+puts "Creating expenses from December 2025 to February 18, 2026..."
 
 # Define expense templates for variety
 expense_templates = {
@@ -113,7 +113,7 @@ expense_templates = {
 
 # Start date: January 1, 2024
 # End date: February 18, 2026
-start_date = Date.new(2024, 1, 1)
+start_date = Date.new(2025, 12, 1)
 end_date = Date.new(2026, 2, 18)
 
 expense_count = 0
@@ -166,5 +166,5 @@ end
 puts "Seed data created successfully!"
 puts "Total categories: #{Category.count}"
 puts "Total expenses: #{Expense.count}"
-puts "Date range: #{Expense.minimum(:created_at).to_date} to #{Expense.maximum(:created_at).to_date}"
+puts "Date range: #{Expense.minimum(:created_at)} to #{Expense.maximum(:created_at)}"
 puts "Total amount: $#{Expense.sum(:amount).round(2)}"

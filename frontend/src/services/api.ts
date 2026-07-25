@@ -2,7 +2,7 @@
  * API service for communicating with the backend
  */
 
-import { Expense, ExpenseFormData } from "../types";
+import { Category, CategoryFormData, Expense, ExpenseFormData } from "../types";
 
 const API_BASE_URL = "http://localhost:3000/api";
 
@@ -37,9 +37,11 @@ export async function getExpenses(
  * Fetch all categories
  */
 export async function fetchCategories(): Promise<
-  Array<{ id: number; name: string }>
+  Category[]
 > {
+
   const response = await fetch(`${API_BASE_URL}/categories`);
+
   if (!response.ok) {
     throw new Error("Failed to fetch categories");
   }
@@ -50,10 +52,10 @@ export async function fetchCategories(): Promise<
  * Create a new expense
  */
 export async function createExpense(data: ExpenseFormData): Promise<Expense> {
+  console.log(data)
   // Convert category name to category_id
   const categories = await fetchCategories();
   const category = categories.find((c) => c.name === data.category);
-
   const expenseData = {
     description: data.description,
     amount: data.amount,
@@ -68,13 +70,40 @@ export async function createExpense(data: ExpenseFormData): Promise<Expense> {
     },
     body: JSON.stringify({ expense: expenseData }),
   });
-
+  console.log(response);
   if (!response.ok) {
     throw new Error("Failed to create expense");
   }
 
   return response.json();
 }
+
+/**
+ * Create a new category
+ */
+export async function createCategory(data: CategoryFormData): Promise<Category> {
+
+  const categoryData = {
+    name:data.name,
+    //icon:data.icon
+  };
+  console.log(JSON.stringify({ category: categoryData }));
+  const response = await fetch(`${API_BASE_URL}/categories`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ category: categoryData }),
+  });
+  
+
+  if (!response.ok) {
+    throw new Error("Failed to create category");
+  }
+
+  return response.json();
+}
+
 
 /**
  * Update an existing expense
