@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getExpenses, createExpense, createCategory, fetchCategories } from "../services/api";
-import { CategoryFormData, Expense, ExpenseFormData } from "../types";
+import { Category, CategoryFormData, Expense, ExpenseFormData } from "../types";
 import YearNavigation from "../components/YearNavigation";
 import { MonthNavigation } from "../components/MonthNavigation";
 import CategoryBreakdown from "../components/CategoryBreakdown";
@@ -10,8 +10,10 @@ import { Modal, Button } from "../vibes";
 import { COLORS } from "../constants/colors";
 import { CategoryForm } from "../components/CategoryForm";
 
+
 const HistoryPage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [categoriesData, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -51,19 +53,37 @@ const HistoryPage: React.FC = () => {
     fetchExpenses();
   }, [selectedYear, selectedMonth]);
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const fetchExpenses = async () => {
     try {
-      console.log("loading")
       setLoading(true);
       const data = await getExpenses(selectedYear, selectedMonth);
-      setExpenses(data)
+      const sortedExpenses = [...data].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime() 
+      );
+      setExpenses(sortedExpenses);
+
 
     } catch (error) {
       console.error("Error fetching expenses:", error);
     } finally {
-      console.log("loading")
       setLoading(false);
+    }
+  };
+  const getCategories = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchCategories();
+      setCategories(data);
 
+
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,7 +111,9 @@ const HistoryPage: React.FC = () => {
     try {
       await createCategory(data);
       setIsExpenseModalOpen(false);
-      fetchCategories();
+      const datar = await getCategories();
+      console.log(datar)
+
     } catch (error) {
       console.error("Error creating category:", error);
       throw error;
@@ -190,6 +212,7 @@ const HistoryPage: React.FC = () => {
             />
             <div style={{ marginTop: "32px" }}>
               <CalendarExpenseTable
+                categories={categoriesData}
                 expenses={expenses}
                 onExpenseUpdated={fetchExpenses}
               />
@@ -204,6 +227,7 @@ const HistoryPage: React.FC = () => {
         title="Add New Expense"
       >
         <ExpenseForm
+          categoryData={categoriesData}
           onSubmit={handleAddExpense}
           onCancel={() => setIsExpenseModalOpen(false)}
         />

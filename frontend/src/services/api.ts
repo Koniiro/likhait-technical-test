@@ -37,11 +37,11 @@ export async function getExpenses(
  * Fetch all categories
  */
 export async function fetchCategories(): Promise<
-  Array<{ id: number; name: string }>
+  Category[]
 > {
-  console.log('fetch categories')
+
   const response = await fetch(`${API_BASE_URL}/categories`);
-  console.log(response);
+
   if (!response.ok) {
     throw new Error("Failed to fetch categories");
   }
@@ -82,20 +82,20 @@ export async function createExpense(data: ExpenseFormData): Promise<Expense> {
  * Create a new category
  */
 export async function createCategory(data: CategoryFormData): Promise<Category> {
-  console.log(data);
 
   const categoryData = {
     name:data.name,
     //icon:data.icon
   };
-
+  console.log(JSON.stringify({ category: categoryData }));
   const response = await fetch(`${API_BASE_URL}/categories`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ expense: categoryData }),
+    body: JSON.stringify({ category: categoryData }),
   });
+  
 
   if (!response.ok) {
     throw new Error("Failed to create category");
