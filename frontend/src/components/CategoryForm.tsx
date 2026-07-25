@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { CategoryFormData } from "../types";
 import { TextField, Button } from "../vibes";
 import { useCategoryForm } from "../hooks/useCategoryForm";
-import EmojiPicker from "emoji-picker-react";
 
 
 interface CategoryFormProps {
@@ -22,7 +21,6 @@ export function CategoryForm({
   onCancel,
   submitLabel = "Add Category",
 }: CategoryFormProps) {
-  const [showPicker, setShowPicker] = useState(false);
   const { formData, errors, isSubmitting, handleChange, handleSubmit } =
     useCategoryForm({
       initialData,
